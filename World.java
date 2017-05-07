@@ -13,6 +13,18 @@ public class World {
 	private double immigrantChanceToCooperateWithSameColor;
 	private double immigrantChanceToCooperateWithDifferentColor;
 	
+	//Default constructor. Sets values to defaults in NetLogo
+	public World()
+	{
+		immigrantsPerDay = 1;
+		mutationRate = 0.005;
+		initialPtr = 0.12;
+		deathRate = 0.10;
+		costOfGiving = 0.01;
+		gainOfReceiving = 0.03;
+		immigrantChanceToCooperateWithSameColor =0.50;
+		immigrantChanceToCooperateWithDifferentColor = 0.50;
+	}
 	 //the current world state storing the position of Agents
     private HashMap<Integer, Agent> worldState = new HashMap<>();
 
