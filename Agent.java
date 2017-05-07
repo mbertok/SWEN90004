@@ -26,4 +26,17 @@ public class Agent {
     public double getPtr(){
         return this.ptr;
     }
+    public boolean isAlturist(){
+        return coop_same && coop_diff;
+    }
+    public boolean isEgoist(){
+        return !coop_same && !coop_diff;
+    }
+    public boolean isEthnocentric(){
+        return coop_same && !coop_diff;
+    }
+    public boolean isCosmopolitan(){
+        return !coop_same && coop_diff;
+    }
+
 }
