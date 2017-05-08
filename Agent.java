@@ -1,8 +1,3 @@
-/**
- * Created by marci on 6/05/2017.
- */
-package SWEN90004;
-
 import java.util.Random;
 
 public class Agent {

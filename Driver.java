@@ -1,6 +1,7 @@
+import SWEN90004.World;
 
 public class Driver {
-
+	private World Map = new World();
 	public void Immigration()
 	{
 		

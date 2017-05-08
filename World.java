@@ -1,4 +1,4 @@
-package SWEN90004;
+
 import java.util.HashMap;
 import java.util.*;
 public class World {
@@ -38,6 +38,14 @@ public class World {
         CDcount=0;
         DCcount=0;
         DDcount=0;
+        dimension = 51;
+        for(int i =0;i<dimension;i++)
+        {
+        	for(int j=0;j<dimension;j++)
+        	{
+        		allSpaces.put(i+j, ' ');
+        	}
+        }
 	}
 
 
@@ -63,6 +71,11 @@ public class World {
             int y = id % this.dimension;
             return new int[] {x, y};
         }
+        /*
+         * 
+         * 
+         * 
+        */
     public void Death(){
         Agent a;
         for(Integer i:worldState.keySet()){
