@@ -74,6 +74,18 @@ public class World {
         }
 
     }
+    public void Immigrate(){
+        Random r=new Random();
+        List<Integer> coord=new ArrayList<Integer>(allSpaces.keySet());
+        int key;
+        for(int i=0;i<immigrantsPerDay;i++){
+            key=coord.get(r.nextInt(coord.size()));
+            worldState.put(key,new Agent(1,initialPtr,true,true));//Placeholder
+            allSpaces.remove(key);
+            coord.remove(key);
+        }
+
+    }
 
     public void count(){
         CCcount=0;

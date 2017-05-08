@@ -42,14 +42,17 @@ public class Agent {
     public boolean isCosmopolitan(){
         return !coop_same && coop_diff;
     }
-    public boolean die(double prob){
+    public boolean check(double prob){
         Random r=new Random();
-        if(r.nextDouble()>prob){
+        if(r.nextDouble()<prob){
             return false;
         }
         else {
             return true;
         }
+    }
+    public boolean die(double death_rate){
+        return  check(death_rate);
     }
 
 }
