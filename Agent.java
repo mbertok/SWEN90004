@@ -11,6 +11,12 @@ public class Agent {
         this.coop_same=same;
         this.coop_diff=diff;
     }
+    public String toString()
+    {
+    	String sameFlag = coop_same? "C":"D";
+    	String diffFlag = coop_diff? "C":"D";
+    	return(sameFlag+diffFlag+"-"+String.format("%0.2f", ptr));
+    }
     public void give(double amount,Agent a){
         this.ptr=-amount;
         a.setPtr(a.getPtr()+amount);
