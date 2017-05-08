@@ -1,6 +1,10 @@
 /**
  * Created by marci on 6/05/2017.
  */
+package SWEN90004;
+
+import java.util.Random;
+
 public class Agent {
     public int color;
     public double ptr;
@@ -37,6 +41,15 @@ public class Agent {
     }
     public boolean isCosmopolitan(){
         return !coop_same && coop_diff;
+    }
+    public boolean die(double prob){
+        Random r=new Random();
+        if(r.nextDouble()>prob){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
 }
