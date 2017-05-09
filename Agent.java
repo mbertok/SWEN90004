@@ -1,5 +1,6 @@
-import java.util.Random;
+package SWEN90004;
 
+import java.util.Random;
 public class Agent {
     public int color;
     public double ptr;
@@ -54,6 +55,32 @@ public class Agent {
     }
     public boolean die(double death_rate){
         return  check(death_rate);
+    }
+    public Agent reproduce(double mut_rate,double ptr,int min_col,int max_col){
+        Random r=new Random();
+        int col=this.color;
+        boolean same=this.coop_same;
+        boolean diff =this.coop_diff;
+        if(check(mut_rate)){
+            int c=r.nextInt();
+            if(c%2==0){
+                col=+1;
+            }
+            else{
+                col=-1;
+            }
+        }
+        if(col>max_col)
+            col=max_col;
+        if(col<min_col)
+            col=min_col;
+        if(check(mut_rate)){
+            same=!same;
+        }
+        if (check(mut_rate)){
+            diff=!diff;
+        }
+        return new Agent(col,ptr,same,diff);
     }
 
 }
