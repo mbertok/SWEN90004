@@ -1,3 +1,5 @@
+package SWEN90004;
+
 import java.util.*;
 public class World {
 	// The dimension of the world
@@ -45,6 +47,14 @@ public class World {
 	{
 		return mutationRate;
 	}
+    public double getImmigrantChanceToCooperateWithSameColorRate()
+    {
+        return immigrantChanceToCooperateWithSameColor;
+    }
+    public double getImmigrantChanceToCooperateWithDifferentColor()
+    {
+        return immigrantChanceToCooperateWithDifferentColor;
+    }
 	public List<int[]> getSpaces()
 	{
 		List<int[]> spaces = new ArrayList<int[]>();
@@ -89,14 +99,25 @@ public class World {
         Agent a;
         for(Integer i:worldState.keySet()){
             a=worldState.get(i);
-            if(a.die(deathRate)){
+            if(a.check(deathRate)){
                 allSpaces.put(i,' ');
                 worldState.remove(i);
             }
         }
 
     }
-    
+    public Agent makeRandomAgent(int col){
+        Random r=new Random();
+        boolean same=false;
+        boolean diff=false;
+        if(r.nextDouble()<(immigrantChanceToCooperateWithSameColor)){
+            same=true;
+        }
+        if(r.nextDouble()<(immigrantChanceToCooperateWithDifferentColor)){
+            diff=true;
+        }
+        return new Agent(col,0,same,diff);
+    }
     /*
      * Adds agent to world
      * @param Agent agent - agent to be added to world
@@ -182,6 +203,7 @@ public class World {
 
 
     }
+
 
 
 }

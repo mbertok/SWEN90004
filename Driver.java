@@ -1,3 +1,5 @@
+package SWEN90004;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,11 +22,18 @@ public class Driver {
 	    Random r=new Random();
         List<int[]> coord = Map.getSpaces();
         int[] key;
+        int col;
+        Agent a;
+        boolean same=false;
+        boolean diff=false;
         try{
 	        for(int i=0;i<immigrantsPerDay;i++)
 	        {
 	            key=coord.get(r.nextInt(coord.size()));
-	            Map.addAgent(new Agent(1,initialPtr,true,true),key[0],key[1]);
+                col=r.nextInt(noOfEthnicities);
+                a=Map.makeRandomAgent(col);
+                a.setPtr(initialPtr);
+	            Map.addAgent(a,key[0],key[1]);
 	            coord.remove(key);
 	        }
         }
@@ -43,7 +52,7 @@ public class Driver {
 	}
 	public void Death()
 	{
-		
+		Map.Death();
 	}
 	public void drive() {
 		while (true)
