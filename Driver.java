@@ -51,10 +51,32 @@ public class Driver {
 	{
 		
 	}
-	public void Reproduction()
+	public void Reproduction() throws OutOfTheWorldException
 	{
-		
+		//Get list of agents
+		List<int[]> coord=Map.getAgents();
+		Agent a;
+		Random r=new Random();
+		int selected;
+		for(int[] i: coord){
+			a=Map.getAgent(i[0],i[1]);
+			//check
+			if(a.check(a.getPtr())) {
+				//selecting cell to put reproduce in
+				int[] neighbours=Map.findNeighbours(i[0],i[1]);
+				selected=Map.selectNeighbour(neighbours);
+				//If space
+				if(selected!=-1) {
+					//create child
+					Map.addAgent(a.reproduce(Map.getMutationRate(), initialPtr, 0, noOfEthnicities), i[0], i[1]);
+				}
+			}
+			//intialise ptr
+			a.setPtr(initialPtr);
+		}
+
 	}
+
 	public void Death()
 	{
 		Map.Death();

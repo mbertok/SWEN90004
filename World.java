@@ -64,6 +64,22 @@ public class World {
 		}
 		return spaces;
 	}
+	public List<int[]> getAgents(){
+	    List<int[]> agents=new ArrayList<int[]>();
+	    for(int i: worldState.keySet()){
+	        agents.add(locate(i));
+        }
+        return agents;
+    }
+    public boolean isAvailable(int x, int y){
+	    return allSpaces.containsKey(locate(x,y));
+    }
+    public boolean isAvailable(int x){
+        return allSpaces.containsKey(x);
+    }
+    public Agent getAgent(int x, int y){
+        return worldState.get(locate(x,y));
+    }
 	public int getDimension()
 	{
 		return dimension;
@@ -174,6 +190,21 @@ public class World {
          	}
          	System.out.println();
          }
+    }
+    public int[] findNeighbours(int i, int j){
+        int k=locate(i,j);
+        int[] list=new int[]{(k-dimension),(k+dimension),(k+1),(k-1)};
+        return list;
+
+    }
+    public int selectNeighbour(int[] neighbours){
+        Random r=new Random();
+        for(int i: neighbours){
+            if(isAvailable(i)){
+                return i;
+            }
+        }
+        return -1;
     }
     public void count(){
         CCcount=0;

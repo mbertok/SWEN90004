@@ -56,7 +56,7 @@ public class Agent {
     public boolean die(double death_rate){
         return  check(death_rate);
     }
-    public Agent reproduce(double mut_rate,double ptr,int min_col,int max_col){
+    public Agent reproduce(double mut_rate,double ptr,int min_col,int max_col) throws OutOfTheWorldException{
         Random r=new Random();
         int col=this.color;
         boolean same=this.coop_same;
