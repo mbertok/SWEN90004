@@ -6,11 +6,20 @@ public class Agent {
     public double ptr;
     private boolean coop_same;
     private boolean coop_diff;
+    //Default constructor
     Agent(int col,double potential,boolean same,boolean diff){
         this.color=col;
         this.ptr=potential;
         this.coop_same=same;
         this.coop_diff=diff;
+    }
+    public boolean isCoopSame()
+    {
+    	return coop_same;
+    }
+    public boolean isCoopDiff()
+    {
+    	return coop_diff;
     }
     public String toString()
     {
@@ -36,7 +45,7 @@ public class Agent {
     public double getPtr(){
         return this.ptr;
     }
-    public int getCol(){
+    public int getColor(){
         return this.color;
     }
     public boolean isAlturist(){

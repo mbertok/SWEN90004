@@ -21,13 +21,13 @@ public class Driver {
 		Map  = new World();
         ticks=t;
 	}
+	
 	//Immigration Phase
 	public void Immigration()
 	{
 	    Random r=new Random();
         List<int[]> coord = Map.getSpaces();
         int[] key;
-        int col;
         Agent a;
         boolean same=false;
         boolean diff=false;
@@ -35,8 +35,7 @@ public class Driver {
 	        for(int i=0;i<immigrantsPerDay;i++)
 	        {
 	            key=coord.get(r.nextInt(coord.size()));
-                col=r.nextInt(noOfEthnicities);
-                a=Map.makeRandomAgent(col);
+                a=Map.makeRandomAgent(noOfEthnicities);
                 a.setPtr(initialPtr);
 	            Map.addAgent(a,key[0],key[1]);
 	            coord.remove(key);
@@ -47,35 +46,28 @@ public class Driver {
         	System.out.println("OutOfTheWorldException. Terminating Program.");
         }
 	}
+	
 	public void Interaction()
 	{
-		
+		for(int[] i : Map.getAgents())
+		{
+			for(Agent neighbor : Map.findNeighbours(i[0], i[1],1))
+			{
+				Interact(Map.getAgent(i[0], i[1]),neighbor);
+			}
+		}
 	}
 
-	public void Interact(Agent a, Agent b){
-		if(a.getCol()==b.getCol()){
-			if(a.isAlturist() || a.isEthnocentric()){
-				//Cooperate
+	public void Interact(Agent a, Agent b)
+	{
+		if(a.getColor()==b.getColor()&&a.isCoopSame())
+		{
 				a.cooperate(Map.getCostOfGiving(),Map.getGainOfReceiving(),b);
-			}
-			if(b.isAlturist() || b.isEthnocentric()){
-				//Cooperate
-				b.cooperate(Map.getCostOfGiving(),Map.getGainOfReceiving(),a);
-
-			}
 		}
-		else{
-			if(a.isAlturist() || a.isCosmopolitan()){
-				//Cooperate
+		if(a.getColor()!=b.getColor()&&a.isCoopDiff())
+		{
 				a.cooperate(Map.getCostOfGiving(),Map.getGainOfReceiving(),b);
-			}
-			if(b.isAlturist() || b.isCosmopolitan()){
-				//Cooperate
-				b.cooperate(Map.getCostOfGiving(),Map.getGainOfReceiving(),a);
-
-			}
 		}
-
 	}
 
 	public void Reproduction()

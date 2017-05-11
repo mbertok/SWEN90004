@@ -43,16 +43,18 @@ public class World {
         	}
         }
 	}
+	public double getCostOfGiving()
+	{
+		return costOfGiving;
+	}
+	public double getGainOfReceiving()
+	{
+		return gainOfReceiving;
+	}
 	public double getMutationRate()
 	{
 		return mutationRate;
 	}
-	public double getCostOfGiving(){
-	    return costOfGiving;
-    }
-    public double getGainOfReceiving(){
-	    return gainOfReceiving;
-    }
     public double getImmigrantChanceToCooperateWithSameColorRate()
     {
         return immigrantChanceToCooperateWithSameColor;
@@ -126,10 +128,10 @@ public class World {
                 worldState.remove(i);
             }
         }
-
     }
-    public Agent makeRandomAgent(int col){
+    public Agent makeRandomAgent(int numberOfEthnicities){
         Random r=new Random();
+        int col=r.nextInt(numberOfEthnicities);
         boolean same=false;
         boolean diff=false;
         if(r.nextDouble()<(immigrantChanceToCooperateWithSameColor)){
@@ -197,10 +199,33 @@ public class World {
          	System.out.println();
          }
     }
-    public int[] findNeighbours(int i, int j){
+    public boolean isAgentInPosition(int x, int y)
+    {
+    	return(worldState.get(locate(x,y))==null?false:true);
+    }
+    public List<Agent> findNeighbours(int i, int j, int radius){
         int k=locate(i,j);
-        int[] list=new int[]{(k-dimension),(k+dimension),(k+1),(k-1)};
-        return list;
+        List<int[]> neighborhood = new ArrayList<int[]>();
+        List<Agent> neighbors;
+        for(int x=i-radius;x>=i-radius&&x<=i+radius;x++)	//add all points in the 
+        {													//Von Neumann neighborhood. 	
+        	for(int y=j-radius;y>=j-radius&&y<=y+radius;y++)
+        	{
+        		if(Math.abs(x-i)+Math.abs(y-j)<=radius)
+        		{
+        			neighborhood.add(new int[]{x,y});
+        		}
+        	}
+        }
+        neighborhood.remove(new int[]{i,j});			//remove initial point from the list
+        for(int[]point :neighborhood)
+        {
+        	if(isAgentInPosition(point[0],point[1]))
+        	{
+        		neighbors.add(worldState.get(locate(point[0],point[1])));
+        	}
+        }
+        return neighbors;
 
     }
     public int selectNeighbour(int[] neighbours){
