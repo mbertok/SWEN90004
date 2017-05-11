@@ -19,18 +19,25 @@ public class Agent {
     	return(sameFlag+diffFlag+"-"+String.format("%0.2f", ptr));
     }
     public void give(double amount,Agent a){
-        this.ptr=-amount;
+        //this.ptr=-amount;
         a.setPtr(a.getPtr()+amount);
     }
     public void take(double amount,Agent a){
-        this.ptr=+amount;
-        a.setPtr(a.getPtr()-amount);
+        //this.ptr=+amount;
+        this.setPtr(a.getPtr()-amount);
+    }
+    public void cooperate(double cost,double gain,Agent a){
+        take(cost,this);
+        give(gain,a);
     }
     public void setPtr(double amount){
         this.ptr=amount;
     }
     public double getPtr(){
         return this.ptr;
+    }
+    public int getCol(){
+        return this.color;
     }
     public boolean isAlturist(){
         return coop_same && coop_diff;

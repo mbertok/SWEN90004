@@ -47,6 +47,12 @@ public class World {
 	{
 		return mutationRate;
 	}
+	public double getCostOfGiving(){
+	    return costOfGiving;
+    }
+    public double getGainOfReceiving(){
+	    return gainOfReceiving;
+    }
     public double getImmigrantChanceToCooperateWithSameColorRate()
     {
         return immigrantChanceToCooperateWithSameColor;

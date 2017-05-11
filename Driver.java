@@ -51,28 +51,61 @@ public class Driver {
 	{
 		
 	}
-	public void Reproduction() throws OutOfTheWorldException
-	{
-		//Get list of agents
-		List<int[]> coord=Map.getAgents();
-		Agent a;
-		Random r=new Random();
-		int selected;
-		for(int[] i: coord){
-			a=Map.getAgent(i[0],i[1]);
-			//check
-			if(a.check(a.getPtr())) {
-				//selecting cell to put reproduce in
-				int[] neighbours=Map.findNeighbours(i[0],i[1]);
-				selected=Map.selectNeighbour(neighbours);
-				//If space
-				if(selected!=-1) {
-					//create child
-					Map.addAgent(a.reproduce(Map.getMutationRate(), initialPtr, 0, noOfEthnicities), i[0], i[1]);
-				}
+
+	public void Interact(Agent a, Agent b){
+		if(a.getCol()==b.getCol()){
+			if(a.isAlturist() || a.isEthnocentric()){
+				//Cooperate
+				a.cooperate(Map.getCostOfGiving(),Map.getGainOfReceiving(),b);
 			}
-			//intialise ptr
-			a.setPtr(initialPtr);
+			if(b.isAlturist() || b.isEthnocentric()){
+				//Cooperate
+				b.cooperate(Map.getCostOfGiving(),Map.getGainOfReceiving(),a);
+
+			}
+		}
+		else{
+			if(a.isAlturist() || a.isCosmopolitan()){
+				//Cooperate
+				a.cooperate(Map.getCostOfGiving(),Map.getGainOfReceiving(),b);
+			}
+			if(b.isAlturist() || b.isCosmopolitan()){
+				//Cooperate
+				b.cooperate(Map.getCostOfGiving(),Map.getGainOfReceiving(),a);
+
+			}
+		}
+
+	}
+
+	public void Reproduction()
+	{
+		try {
+			//Get list of agents
+			List<int[]> coord = Map.getAgents();
+			Agent a;
+			Random r = new Random();
+			int selected;
+			for (int[] i : coord) {
+				a = Map.getAgent(i[0], i[1]);
+				//check if ready to reproduce
+				if (a.check(a.getPtr())) {
+					//selecting cell to put reproduce in
+					int[] neighbours = Map.findNeighbours(i[0], i[1]);
+					selected = Map.selectNeighbour(neighbours);
+					//If space
+					if (selected != -1) {
+						//create child
+						Map.addAgent(a.reproduce(Map.getMutationRate(), initialPtr, 0, noOfEthnicities), i[0], i[1]);
+					}
+				}
+				//intialise ptr
+				a.setPtr(initialPtr);
+			}
+		}
+		catch(OutOfTheWorldException e)
+		{
+			System.out.println("OutOfTheWorldException. Terminating Program.");
 		}
 
 	}
@@ -84,6 +117,7 @@ public class Driver {
     public void Count(){
         Map.count();
     }
+    //Exports the current number of agents per category
     public String Status(){
         int[] result=Map.export();
         String s="";
