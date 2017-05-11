@@ -79,10 +79,10 @@ public class World {
         }
         return agents;
     }
-    public boolean isAvailable(int x, int y){
+    public boolean isSpace(int x, int y){
 	    return allSpaces.containsKey(locate(x,y));
     }
-    public boolean isAvailable(int x){
+    public boolean isSpace(int x){
         return allSpaces.containsKey(x);
     }
     public Agent getAgent(int x, int y){
@@ -228,10 +228,29 @@ public class World {
         return neighbors;
 
     }
+    public List<int[]> findNeighboringSpaces(int i, int j, int radius){
+        int k=locate(i,j);
+        List<int[]> neighborhood = new ArrayList<int[]>();
+        List<Agent> neighboringSpaces;
+        for(int x=i-radius;x>=i-radius&&x<=i+radius;x++)	//add all points without agent in the 
+        {													//Von Neumann neighborhood. 	
+        	for(int y=j-radius;y>=j-radius&&y<=y+radius;y++)
+        	{
+        		if(Math.abs(x-i)+Math.abs(y-j)<=radius)
+        		{
+        			if(!isAgentInPosition(x, y))
+        			neighborhood.add(new int[]{x,y});
+        		}
+        	}
+        }
+        return neighborhood;
+
+    }
+
     public int selectNeighbour(int[] neighbours){
         Random r=new Random();
         for(int i: neighbours){
-            if(isAvailable(i)){
+            if(isSpace(i)){
                 return i;
             }
         }

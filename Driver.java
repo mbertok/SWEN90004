@@ -83,12 +83,11 @@ public class Driver {
 				//check if ready to reproduce
 				if (a.check(a.getPtr())) {
 					//selecting cell to put reproduce in
-					int[] neighbours = Map.findNeighbours(i[0], i[1]);
-					selected = Map.selectNeighbour(neighbours);
-					//If space
+					List<int[]> neighboringSpaces = Map.findNeighboringSpaces(i[0], i[1],1);
+					int[] point = neighboringSpaces.get(r.nextInt(neighboringSpaces.size()));
 					if (selected != -1) {
 						//create child
-						Map.addAgent(a.reproduce(Map.getMutationRate(), initialPtr, 0, noOfEthnicities), i[0], i[1]);
+						Map.addAgent(a.reproduce(Map.getMutationRate(), initialPtr, 0, noOfEthnicities), point[0], point[1]);
 					}
 				}
 				//intialise ptr
