@@ -1,3 +1,4 @@
+package SWEN90004;
 
 public class OutOfTheWorldException extends Exception {
 	public OutOfTheWorldException(String message) {
