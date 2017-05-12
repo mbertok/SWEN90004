@@ -1,4 +1,3 @@
-package SWEN90004;
 import java.util.*;
 public class World {
 	// The dimension of the world
@@ -128,7 +127,7 @@ public class World {
             }
         }
     }
-    public Agent makeRandomAgent(int numberOfEthnicities,double ptr){
+    public Agent makeRandomAgent(int numberOfEthnicities){
         Random r=new Random();
         int col=r.nextInt(numberOfEthnicities);
         boolean same=false;
@@ -139,7 +138,7 @@ public class World {
         if(r.nextDouble()<(immigrantChanceToCooperateWithDifferentColor)){
             diff=true;
         }
-        return new Agent(col,ptr,same,diff);
+        return new Agent(col,0,same,diff);
     }
     /*
      * Adds agent to world
@@ -153,8 +152,7 @@ public class World {
 		{
     		worldState.put(locate(x,y), agent);
         	allSpaces.remove(locate(x,y));
-            System.out.println("Agent e");
-        }
+		}
 		else
 		{
 			throw new OutOfTheWorldException("Coordinate greater than dimension");
@@ -204,7 +202,6 @@ public class World {
     	return(worldState.get(locate(x,y))==null?false:true);
     }
     public List<Agent> findNeighbours(int i, int j, int radius){
-        System.out.println("finding");
         int k=locate(i,j);
         List<int[]> neighborhood = new ArrayList<int[]>();
         List<Agent> neighbors=new ArrayList<Agent>();
@@ -263,13 +260,10 @@ public class World {
         DCcount=0;
         DDcount=0;
         Agent a;
-        System.out.println(worldState.keySet());
         for(Integer i : worldState.keySet()){
             a=worldState.get(i);
-            System.out.println(a.toString());
             if(a.isAlturist()){
                 CCcount++;
-                System.out.println("AA");
             }
             else if (a.isEgoist()){
                 DDcount++;

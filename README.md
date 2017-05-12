@@ -4,4 +4,3 @@ Tasks by Haris
 
 Tasks by Marcel
 - [x] Create the Agent class
--
