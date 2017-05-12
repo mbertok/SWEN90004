@@ -1,8 +1,4 @@
-package SWEN90004;
-
-import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.io.IOException;
@@ -12,25 +8,23 @@ public class Driver {
 	public int noOfEthnicities;
 	private double initialPtr;
 	private int immigrantsPerDay;
-    private int ticks;
-	public Driver(int t)
+	public Driver()
 	{
+		System.out.println("Initializing Driver");
 		noOfEthnicities = 4;
 		initialPtr = 0.12;
 		immigrantsPerDay = 1;
 		Map  = new World();
-        ticks=t;
 	}
 	
 	//Immigration Phase
 	public void Immigration()
 	{
+		System.out.println("Immigration Phase.");
 	    Random r=new Random();
         List<int[]> coord = Map.getSpaces();
         int[] key;
         Agent a;
-        boolean same=false;
-        boolean diff=false;
         try{
 	        for(int i=0;i<immigrantsPerDay;i++)
 	        {
@@ -49,6 +43,7 @@ public class Driver {
 	
 	public void Interaction()
 	{
+		System.out.println("Interaction Phase");
 		for(int[] i : Map.getAgents())
 		{
 			for(Agent neighbor : Map.findNeighbours(i[0], i[1],1))
@@ -72,12 +67,12 @@ public class Driver {
 
 	public void Reproduction()
 	{
+		System.out.println("Reproduction Phase");
 		try {
 			//Get list of agents
 			List<int[]> coord = Map.getAgents();
 			Agent a;
 			Random r = new Random();
-			int selected;
 			for (int[] i : coord) {
 				a = Map.getAgent(i[0], i[1]);
 				//check if ready to reproduce
@@ -85,12 +80,9 @@ public class Driver {
 					//selecting cell to put reproduce in
 					List<int[]> neighboringSpaces = Map.findNeighboringSpaces(i[0], i[1],1);
 					int[] point = neighboringSpaces.get(r.nextInt(neighboringSpaces.size()));
-					if (selected != -1) {
-						//create child
-						Map.addAgent(a.reproduce(Map.getMutationRate(), initialPtr, 0, noOfEthnicities), point[0], point[1]);
-					}
+					Map.addAgent(a.reproduce(Map.getMutationRate(), initialPtr, 0, noOfEthnicities), point[0], point[1]);
 				}
-				//intialise ptr
+				//Initialize ptr
 				a.setPtr(initialPtr);
 			}
 		}
@@ -103,7 +95,21 @@ public class Driver {
 
 	public void Death()
 	{
-		Map.Death();
+		System.out.println("Death Phase");
+		Random r = new Random();
+		for(int[] i : Map.getAgents())
+		{
+			if( Map.getDeathRate() <  r.nextDouble())
+			{
+				try{
+				Map.removeAgent(i[0], i[1]);
+				}
+				catch (OutOfTheWorldException e)
+				{
+					System.out.println("Out of the World Exception caught. Terminating.");
+				}
+			}
+		}
 	}
     public void Count(){
         Map.count();
@@ -123,19 +129,26 @@ public class Driver {
         }
         return s;
     }
-	public void drive() throws IOException{
+	public void drive(int ticks){
+		try{
         FileWriter f=new FileWriter("ethno.csv");
         f.write("Tick,CC,CD,DC,DD \n");
 		for(int i=1;i<=ticks;i++)
 		{
+			System.out.println("Tick:"+i);
 			Immigration();
 			Interaction();
 			Reproduction();
 			Death();
-            Count();
-            f.write(i);
+            Count();    
+            f.write(""+i+",");
             f.write(Status());
 		}
         f.close();
+		}
+        catch(IOException e)
+        {
+        	System.out.println("IOException caught. terminating program");
+        }
 	}
 }

@@ -1,5 +1,3 @@
-package SWEN90004;
-
 import java.util.*;
 public class World {
 	// The dimension of the world
@@ -24,6 +22,7 @@ public class World {
 	//Default constructor. Sets values to defaults in NetLogo
 	public World()
 	{
+		System.out.println("Creating World.");
 		mutationRate = 0.005;
 		deathRate = 0.10;
 		costOfGiving = 0.01;
@@ -34,7 +33,7 @@ public class World {
         CDcount=0;
         DCcount=0;
         DDcount=0;
-        dimension = 51;
+        dimension =10;
         for(int i =0;i<dimension;i++)
         {
         	for(int j=0;j<dimension;j++)
@@ -42,6 +41,10 @@ public class World {
         		allSpaces.put(i+j, ' ');
         	}
         }
+	}
+	public double getDeathRate()
+	{
+		return deathRate;
 	}
 	public double getCostOfGiving()
 	{
@@ -206,7 +209,7 @@ public class World {
     public List<Agent> findNeighbours(int i, int j, int radius){
         int k=locate(i,j);
         List<int[]> neighborhood = new ArrayList<int[]>();
-        List<Agent> neighbors;
+        List<Agent> neighbors=new ArrayList<Agent>();
         for(int x=i-radius;x>=i-radius&&x<=i+radius;x++)	//add all points in the 
         {													//Von Neumann neighborhood. 	
         	for(int y=j-radius;y>=j-radius&&y<=y+radius;y++)
