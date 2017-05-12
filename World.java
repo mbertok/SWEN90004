@@ -203,15 +203,22 @@ public class World {
     }
     public List<Agent> findNeighbours(int i, int j, int radius){
         int k=locate(i,j);
+        System.out.println("point:"+i+","+j);
         List<int[]> neighborhood = new ArrayList<int[]>();
         List<Agent> neighbors=new ArrayList<Agent>();
-        for(int x=i-radius;x>=i-radius&&x<=i+radius;x++)	//add all points in the 
-        {													//Von Neumann neighborhood. 	
-        	for(int y=j-radius;y>=j-radius&&y<=y+radius;y++)
+        for(int x=i-radius;x<dimension&&x<=i+radius;x++)	//add all points in the 
+        {
+        
+        	//Von Neumann neighborhood. 	
+        	for(int y=j-radius;y<=j+radius;y++)
         	{
+        		
         		if(Math.abs(x-i)+Math.abs(y-j)<=radius)
         		{
-        			neighborhood.add(new int[]{x,y});
+        			if(x>=0&&x<dimension&&y>=0&&y<dimension)
+        			{
+	        			neighborhood.add(new int[]{x,y});
+        			}
         		}
         	}
         }
@@ -230,9 +237,9 @@ public class World {
         int k=locate(i,j);
         List<int[]> neighborhood = new ArrayList<int[]>();
         List<Agent> neighboringSpaces;
-        for(int x=i-radius;x>=i-radius&&x<=i+radius;x++)	//add all points without agent in the 
+        for(int x=i-radius;x<=i+radius;x++)	//add all points without agent in the 
         {													//Von Neumann neighborhood. 	
-        	for(int y=j-radius;y>=j-radius&&y<=y+radius;y++)
+        	for(int y=j-radius;y<=j+radius;y++)
         	{
         		if(Math.abs(x-i)+Math.abs(y-j)<=radius)
         		{
