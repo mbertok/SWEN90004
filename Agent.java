@@ -1,3 +1,5 @@
+package SWEN90004;
+
 import java.util.Random;
 public class Agent {
     public int color;
@@ -88,6 +90,22 @@ public class Agent {
     }
     public boolean die(double death_rate){
         return  check(death_rate);
+    }
+    public  void kill(){
+        if(this.coop_same)
+        {
+            if(this.coop_diff)
+                CCcount-=1;
+            else
+                CDcount-=1;
+        }
+        else
+        {
+            if(this.coop_diff)
+                DCcount-=1;
+            else
+                DDcount-=1;
+        }
     }
     public Agent reproduce(double mut_rate,double ptr,int min_col,int max_col) throws OutOfTheWorldException{
         Random r=new Random();

@@ -1,3 +1,5 @@
+package SWEN90004;
+
 import java.util.*;
 public class World {
 	// The dimension of the world
@@ -168,7 +170,8 @@ public class World {
     {
     	if(x<dimension&&y<dimension)
 		{
-	    	worldState.remove(locate(x,y));
+	    	worldState.get(locate(x,y)).kill();
+            worldState.remove(locate(x,y));
 	    	allSpaces.put(locate(x,y),' ');
 		}
     	else
