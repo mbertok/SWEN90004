@@ -287,11 +287,7 @@ public class World {
 
         }
     }
-    public int[] export(){
-        return new int[]{this.CCcount,this.CDcount,this.DCcount,this.DDcount};
 
-
-    }
 
 
 

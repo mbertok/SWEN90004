@@ -1,3 +1,5 @@
+package SWEN90004;
+
 import java.io.FileWriter;
 import java.util.List;
 import java.util.Random;
@@ -13,7 +15,7 @@ public class Driver {
 		System.out.println("Initializing Driver");
 		noOfEthnicities = 4;
 		initialPtr = 0.12;
-		immigrantsPerDay = 1;
+		immigrantsPerDay = 4;
 		Map  = new World();
 	}
 	
@@ -103,11 +105,12 @@ public class Driver {
 		Random r = new Random();
 		for(int[] i : Map.getAgents())
 		{
-			if( Map.getDeathRate() <  r.nextDouble())
+			if( Map.getDeathRate() >  r.nextDouble())
 			{
 				try{
 				Map.removeAgent(i[0], i[1]);
-				}
+                    System.out.println("MIA");
+                }
 				catch (OutOfTheWorldException e)
 				{
 					System.out.println("Out of the World Exception caught. Terminating.");
@@ -119,9 +122,12 @@ public class Driver {
     	System.out.println("\t\t\t\tCC:"+Agent.CCcount+";CD:"+Agent.CDcount+
     			"DC:"+Agent.DCcount+";DD:"+Agent.DDcount);
     }
+    public int[] export(){
+        return new int[]{Agent.CCcount,Agent.CDcount,Agent.DCcount,Agent.DDcount};
+}
     //Exports the current number of agents per category
     public String Status(){
-        int[] result=Map.export();
+        int[] result=export();
         String s="";
         for(int i=0;i<result.length;i++){
             s=s+Integer.toString(result[i]);
