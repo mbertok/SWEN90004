@@ -28,12 +28,7 @@ public class World {
 		costOfGiving = 0.01;
 		gainOfReceiving = 0.03;
 		immigrantChanceToCooperateWithSameColor =0.50;
-		immigrantChanceToCooperateWithDifferentColor = 0.50;
-        CCcount=0;
-        CDcount=0;
-        DCcount=0;
-        DDcount=0;
-        dimension =10;
+        dimension =5;
         for(int i =0;i<dimension;i++)
         {
         	for(int j=0;j<dimension;j++)

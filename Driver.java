@@ -111,8 +111,9 @@ public class Driver {
 			}
 		}
 	}
-    public void Count(){
-        Map.count();
+    public void PrintCount(){
+    	System.out.println("\t\t\t\tCC:"+Agent.CCcount+";CD:"+Agent.CDcount+
+    			"DC:"+Agent.DCcount+";DD:"+Agent.DDcount);
     }
     //Exports the current number of agents per category
     public String Status(){
@@ -140,7 +141,7 @@ public class Driver {
 			Interaction();
 			Reproduction();
 			Death();
-            Count();    
+            PrintCount();
             f.write(""+i+",");
             f.write(Status());
 		}

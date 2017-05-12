@@ -2,15 +2,33 @@ import java.util.Random;
 public class Agent {
     public int color;
     public double ptr;
+    public static int CCcount =0;
+    public static int CDcount =0;
+    public static int DCcount =0;
+    public static int DDcount =0;
     private boolean coop_same;
     private boolean coop_diff;
     //Default constructor
     Agent(int col,double potential,boolean same,boolean diff){
-        System.out.println("Making Agent");
+        System.out.println("\t\t\t\tMaking Agent");
     	this.color=col;
         this.ptr=potential;
         this.coop_same=same;
         this.coop_diff=diff;
+        if(coop_same)
+        {
+        	if(coop_diff)
+        		CCcount+=1;
+        	else
+        		CDcount+=1;
+        }
+        else
+        {
+        	if(coop_diff)
+        		DCcount+=1;
+        	else
+        		DDcount+=1;
+        }
     }
     public boolean isCoopSame()
     {
