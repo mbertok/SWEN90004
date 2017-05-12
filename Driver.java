@@ -28,11 +28,13 @@ public class Driver {
         try{
 	        for(int i=0;i<immigrantsPerDay;i++)
 	        {
-	            key=coord.get(r.nextInt(coord.size()));
-                a=Map.makeRandomAgent(noOfEthnicities);
-                a.setPtr(initialPtr);
-	            Map.addAgent(a,key[0],key[1]);
-	            coord.remove(key);
+                if(coord.size()>0){
+                    key=coord.get(r.nextInt(coord.size()));
+                    a=Map.makeRandomAgent(noOfEthnicities);
+                    a.setPtr(initialPtr);
+                    Map.addAgent(a,key[0],key[1]);
+                    coord.remove(key);
+                }
 	        }
         }
         catch(OutOfTheWorldException e)
@@ -79,8 +81,10 @@ public class Driver {
 				if (a.check(a.getPtr())) {
 					//selecting cell to put reproduce in
 					List<int[]> neighboringSpaces = Map.findNeighboringSpaces(i[0], i[1],1);
-					int[] point = neighboringSpaces.get(r.nextInt(neighboringSpaces.size()));
-					Map.addAgent(a.reproduce(Map.getMutationRate(), initialPtr, 0, noOfEthnicities), point[0], point[1]);
+                    if(neighboringSpaces.size()>0){
+                        int[] point = neighboringSpaces.get(r.nextInt(neighboringSpaces.size()));
+                        Map.addAgent(a.reproduce(Map.getMutationRate(), initialPtr, 0, noOfEthnicities), point[0], point[1]);
+                    }
 				}
 				//Initialize ptr
 				a.setPtr(initialPtr);
