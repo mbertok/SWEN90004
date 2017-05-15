@@ -1,5 +1,3 @@
-package SWEN90004;
-
 import java.io.FileWriter;
 import java.util.List;
 import java.util.Random;
@@ -119,7 +117,7 @@ public class Driver {
 		}
 	}
     public void PrintCount(){
-    	System.out.println("\t\t\t\tCC:"+Agent.CCcount+";CD:"+Agent.CDcount+
+    	System.out.println("CC:"+Agent.CCcount+";CD:"+Agent.CDcount+
     			"DC:"+Agent.DCcount+";DD:"+Agent.DDcount);
     }
     public int[] export(){

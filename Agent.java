@@ -1,5 +1,3 @@
-package SWEN90004;
-
 import java.util.Random;
 public class Agent {
     public int color;
@@ -12,7 +10,7 @@ public class Agent {
     private boolean coop_diff;
     //Default constructor
     Agent(int col,double potential,boolean same,boolean diff){
-        System.out.println("\t\t\t\tMaking Agent");
+        System.out.println("Making Agent");
     	this.color=col;
         this.ptr=potential;
         this.coop_same=same;
@@ -122,9 +120,9 @@ public class Agent {
             }
         }
         if(col>max_col)
-            col=max_col;
-        if(col<min_col)
             col=min_col;
+        if(col<min_col)
+            col=max_col;
         if(check(mut_rate)){
             same=!same;
         }

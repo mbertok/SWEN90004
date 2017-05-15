@@ -1,14 +1,9 @@
-package SWEN90004;
-
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 public class World {
 	// The dimension of the world
 	private int dimension;
-    private int CCcount;
-    private int CDcount;
-    private int DCcount;
-    private int DDcount;
-
 	private double mutationRate;
 	private double deathRate;
 	private double costOfGiving;
@@ -31,13 +26,30 @@ public class World {
 		gainOfReceiving = 0.03;
 		immigrantChanceToCooperateWithSameColor =0.50;
         dimension =5;
-        for(int i =0;i<dimension;i++)
-        {
-        	for(int j=0;j<dimension;j++)
-        	{
-        		allSpaces.put(i+j, ' ');
-        	}
-        }
+        double[][] Map;
+		int Dimension;
+		try {
+			Scanner sc = new Scanner(new File("C:\\Users\\abhimanyu\\workspace\\sillinesssake\\src\\sillinesssake\\WorldMap.txt"));
+			Dimension = Integer.parseInt(sc.nextLine());
+			System.out.println("Dimension:"+Dimension);
+			Map = new double[Dimension][Dimension];
+			int i =0;
+			 while (sc.hasNextLine()) {
+		         List<Double> row = new ArrayList<Double>();
+		         int j = 0;
+				 for(String s: sc.nextLine().split("\t"))
+		          {
+					 Map[i][j]=Double.parseDouble(s);
+					 j++;
+		          }
+				 i++;
+				 //rows.add(row);
+					
+			 }
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	public double getDeathRate()
 	{
