@@ -12,10 +12,10 @@ public class World {
 	private double immigrantChanceToCooperateWithDifferentColor;
 
     //the current world state storing the position of Agents
-    private HashMap<Integer, Agent> worldState = new HashMap<Integer, Agent>();
+    private HashMap<Integer, Cell> worldState = new HashMap<Integer, Cell>();
 
     //the current world state storing the position of all empty spaces
-    private HashMap<Integer, Character> allSpaces = new HashMap<Integer, Character>();
+    private HashMap<Integer, Cell> allSpaces = new HashMap<Integer, Cell>();
 	//Default constructor. Sets values to defaults in NetLogo
 	public World()
 	{
@@ -26,25 +26,26 @@ public class World {
 		gainOfReceiving = 0.03;
 		immigrantChanceToCooperateWithSameColor =0.50;
         dimension =5;
-        double[][] Map;
+        Cell[][] Map;
 		int Dimension;
 		try {
 			Scanner sc = new Scanner(new File("C:\\Users\\abhimanyu\\workspace\\sillinesssake\\src\\sillinesssake\\WorldMap.txt"));
 			Dimension = Integer.parseInt(sc.nextLine());
 			System.out.println("Dimension:"+Dimension);
-			Map = new double[Dimension][Dimension];
+			Map = new Cell[Dimension][Dimension];
 			int i =0;
 			 while (sc.hasNextLine()) {
 		         List<Double> row = new ArrayList<Double>();
 		         int j = 0;
 				 for(String s: sc.nextLine().split("\t"))
 		          {
-					 Map[i][j]=Double.parseDouble(s);
+					 Cell temp =new Cell(i,j,Double.parseDouble(s));
+					 Map[i][j]=temp;
+					 allSpaces.put((i*dimension)+j, temp);
 					 j++;
 		          }
 				 i++;
-				 //rows.add(row);
-					
+				 //rows.add(row);					
 			 }
 		}
 		catch (FileNotFoundException e) {
@@ -276,29 +277,8 @@ public class World {
         }
         return -1;
     }
-    public void count(){
-        CCcount=0;
-        CDcount=0;
-        DCcount=0;
-        DDcount=0;
-        Agent a;
-        for(Integer i : worldState.keySet()){
-            a=worldState.get(i);
-            if(a.isAlturist()){
-                CCcount++;
-            }
-            else if (a.isEgoist()){
-                DDcount++;
-            }
-            else if(a.isCosmopolitan()){
-                DCcount++;
-            }
-            else if(a.isEthnocentric()){
-                CDcount++;
-            }
-
-        }
-    }
+   
+    
 
 
 
