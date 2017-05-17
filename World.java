@@ -10,7 +10,7 @@ public class World {
 	private double gainOfReceiving;
 	private double immigrantChanceToCooperateWithSameColor;
 	private double immigrantChanceToCooperateWithDifferentColor;
-
+    Cell[][] Map;
     //the current world state storing the position of Agents
     private HashMap<Integer, Cell> worldState = new HashMap<Integer, Cell>();
 
@@ -26,7 +26,6 @@ public class World {
 		gainOfReceiving = 0.03;
 		immigrantChanceToCooperateWithSameColor =0.50;
         dimension =5;
-        Cell[][] Map;
 		int Dimension;
 		try {
 			Scanner sc = new Scanner(new File("C:\\Users\\abhimanyu\\workspace\\sillinesssake\\src\\sillinesssake\\WorldMap.txt"));
@@ -35,7 +34,6 @@ public class World {
 			Map = new Cell[Dimension][Dimension];
 			int i =0;
 			 while (sc.hasNextLine()) {
-		         List<Double> row = new ArrayList<Double>();
 		         int j = 0;
 				 for(String s: sc.nextLine().split("\t"))
 		          {
@@ -47,35 +45,50 @@ public class World {
 				 i++;
 				 //rows.add(row);					
 			 }
+			 sc.close();
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	//return deathRate
 	public double getDeathRate()
 	{
 		return deathRate;
 	}
+	
+	//return costOfGiving
 	public double getCostOfGiving()
 	{
 		return costOfGiving;
 	}
+	
+	//return gainOfReceiving
 	public double getGainOfReceiving()
 	{
 		return gainOfReceiving;
 	}
+	
+	//return mutationRate
 	public double getMutationRate()
 	{
 		return mutationRate;
 	}
+	
+	//return immigrantChanceToCooperateWithSameColor
     public double getImmigrantChanceToCooperateWithSameColorRate()
     {
         return immigrantChanceToCooperateWithSameColor;
     }
+    
+    //return immigrantChanceToCooperateWithDifferentColor
     public double getImmigrantChanceToCooperateWithDifferentColor()
     {
         return immigrantChanceToCooperateWithDifferentColor;
     }
+    
+    //returns hashes of all empty cells
 	public List<int[]> getSpaces()
 	{
 		List<int[]> spaces = new ArrayList<int[]>();
@@ -85,6 +98,8 @@ public class World {
 		}
 		return spaces;
 	}
+	
+	//returns list of all agents
 	public List<int[]> getAgents(){
 	    List<int[]> agents=new ArrayList<int[]>();
 	    for(int i: worldState.keySet()){
@@ -92,19 +107,31 @@ public class World {
         }
         return agents;
     }
+	
+	//checks if cell in given coordinates does not have an agent
     public boolean isSpace(int x, int y){
 	    return allSpaces.containsKey(locate(x,y));
     }
+    
+    //checks if cell with given hash does not have an agent
     public boolean isSpace(int x){
         return allSpaces.containsKey(x);
     }
+    
+    /*Return Agent in given x,y coordinate
+     * @param x - the x coordinate of the world matrix
+     * @param y - the y coordinate of the world matrix
+     */
     public Agent getAgent(int x, int y){
-        return worldState.get(locate(x,y));
+        return worldState.get(locate(x,y)).GetAgentInCell();
     }
+    
+    //Returns Dimension
 	public int getDimension()
 	{
 		return dimension;
 	}
+	
     /* Returns the cell id corresponding to the x and y coordinates
      * of the 2D world matrix
      * @param x - the x coordinate of the world matrix
@@ -122,26 +149,32 @@ public class World {
      * @param return - an array containing the corresponding x and the y
      * coordinates to hash map id.
      */
-        private int[] locate(int id) {
-            int x = id / this.dimension;
-            int y = id % this.dimension;
-            return new int[] {x, y};
-        }
-        /*
-         * 
-         * 
-         * 
-        */
+    private int[] locate(int id) {
+        int x = id / this.dimension;
+        int y = id % this.dimension;
+        return new int[] {x, y};
+    }
+    
+    /*
+     * Removes Agent from world by probability
+    */
     public void Death(){
         Agent a;
         for(Integer i:worldState.keySet()){
-            a=worldState.get(i);
+            a=worldState.get(i).GetAgentInCell();
             if(a.check(deathRate)){
-                allSpaces.put(i,' ');
+                int[] position = locate(i);
+            	allSpaces.put(i,Map[position[0]][position[1]]);
                 worldState.remove(i);
             }
         }
     }
+    
+    /*
+     * Creates a random agent a random ethnicity less than given numberOfEthnicities
+     * @param Int numberOfEthnicities Maximum number of ethnicities on the world
+     *  
+     */
     public Agent makeRandomAgent(int numberOfEthnicities){
         Random r=new Random();
         int col=r.nextInt(numberOfEthnicities);
@@ -155,6 +188,7 @@ public class World {
         }
         return new Agent(col,0,same,diff);
     }
+    
     /*
      * Adds agent to world
      * @param Agent agent - agent to be added to world
@@ -165,7 +199,7 @@ public class World {
     {
 		if(x<dimension&&y<dimension)
 		{
-    		worldState.put(locate(x,y), agent);
+    		worldState.put(locate(x,y), Map[x][y]);
         	allSpaces.remove(locate(x,y));
 		}
 		else
@@ -183,9 +217,9 @@ public class World {
     {
     	if(x<dimension&&y<dimension)
 		{
-	    	worldState.get(locate(x,y)).kill();
+	    	worldState.get(locate(x,y)).GetAgentInCell().kill();
             worldState.remove(locate(x,y));
-	    	allSpaces.put(locate(x,y),' ');
+	    	allSpaces.put(locate(x,y),Map[x][y]);
 		}
     	else
 		{
@@ -213,12 +247,15 @@ public class World {
          	System.out.println();
          }
     }
+    
+    //check if there is an agent in given x,y coordinates
     public boolean isAgentInPosition(int x, int y)
     {
     	return(worldState.get(locate(x,y))==null?false:true);
     }
+    
+    //returns list of agents next to cell with given coordinates
     public List<Agent> findNeighbours(int i, int j, int radius){
-        int k=locate(i,j);
         System.out.println("point:"+i+","+j);
         List<int[]> neighborhood = new ArrayList<int[]>();
         List<Agent> neighbors=new ArrayList<Agent>();
@@ -243,16 +280,15 @@ public class World {
         {
         	if(isAgentInPosition(point[0],point[1]))
         	{
-        		neighbors.add(worldState.get(locate(point[0],point[1])));
+        		neighbors.add(worldState.get(locate(point[0],point[1])).GetAgentInCell());
         	}
         }
         return neighbors;
-
     }
+    
+    //returns coordinates of spaces surrounding the cell with given coordinates
     public List<int[]> findNeighboringSpaces(int i, int j, int radius){
-        int k=locate(i,j);
         List<int[]> neighborhood = new ArrayList<int[]>();
-        List<Agent> neighboringSpaces;
         for(int x=i-radius;x<=i+radius;x++)	//add all points without agent in the 
         {													//Von Neumann neighborhood. 	
         	for(int y=j-radius;y<=j+radius;y++)
@@ -265,11 +301,10 @@ public class World {
         	}
         }
         return neighborhood;
-
     }
 
+    
     public int selectNeighbour(int[] neighbours){
-        Random r=new Random();
         for(int i: neighbours){
             if(isSpace(i)){
                 return i;
