@@ -1,6 +1,9 @@
 package SWEN90004;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 public class World {
 	// The dimension of the world
 	private int dimension;
@@ -22,7 +25,11 @@ public class World {
     //the current world state storing the position of all empty spaces
     private HashMap<Integer, Character> allSpaces = new HashMap<Integer, Character>();
 	//Default constructor. Sets values to defaults in NetLogo
-	public World()
+
+    /**
+     * The default constructor
+     */
+    public World()
 	{
 		System.out.println("Creating World.");
 		mutationRate = 0.005;
@@ -39,31 +46,70 @@ public class World {
         	}
         }
 	}
+
+    /**
+     * Returns the deathRate variable
+     * @return - the value of deathRate
+     */
 	public double getDeathRate()
 	{
 		return deathRate;
 	}
+
+    /**
+     * Returns the costOfGiving
+     * @return - the value of the costOfGiving
+     */
 	public double getCostOfGiving()
 	{
 		return costOfGiving;
 	}
+
+    /**
+     * Returns the gainOfReceiving
+     * @return - the value of gainOfReceiving
+     */
 	public double getGainOfReceiving()
 	{
 		return gainOfReceiving;
 	}
+
+
+    /**
+     * Returns the mutationRate
+     * @return - the value of mutationRate
+     */
 	public double getMutationRate()
 	{
 		return mutationRate;
 	}
+
+
+    /**
+     * Returns the immigrantChanceToCooperateWithSameColor.
+     * @return - the value of immigrantChanceToCooperateWithSameColor
+     */
     public double getImmigrantChanceToCooperateWithSameColorRate()
     {
         return immigrantChanceToCooperateWithSameColor;
     }
+
+
+    /**
+     * Returns the immigrantChanceToCooperateWithDifferentColor
+     * @return - the value of immigrantChanceToCooperateWithDifferentColor
+     */
     public double getImmigrantChanceToCooperateWithDifferentColor()
     {
         return immigrantChanceToCooperateWithDifferentColor;
     }
-	public List<int[]> getSpaces()
+
+
+    /**
+     * Returns the list of free spaces in the board
+     * @return - the free spaces as an array of integers
+     */
+    public List<int[]> getSpaces()
 	{
 		List<int[]> spaces = new ArrayList<int[]>();
 		for(int i:allSpaces.keySet())
@@ -72,6 +118,12 @@ public class World {
 		}
 		return spaces;
 	}
+
+
+    /**
+     * Returns the list of agents in the world
+     * @return - the agents as a list
+     */
 	public List<int[]> getAgents(){
 	    List<int[]> agents=new ArrayList<int[]>();
 	    for(int i: worldState.keySet()){
@@ -79,16 +131,42 @@ public class World {
         }
         return agents;
     }
+
+
+    /**
+     * Checks whether a location is empty in the world
+     * @param x - the x coordinate of the location
+     * @param y - the y coordinate of the location
+     * @return - true if the location is empty
+     */
     public boolean isSpace(int x, int y){
 	    return allSpaces.containsKey(locate(x,y));
     }
+
+    /**
+     * Checks whether a location is empty in the world
+     * @param x - the id corresponding to the hashmap keyset
+     * @return - true if the location is empty and false otherwise
+     */
     public boolean isSpace(int x){
         return allSpaces.containsKey(x);
     }
+
+    /**
+     * Returns the agent on the specified location of board.
+     * @param x - the x coordinate of the location
+     * @param y - the y coordinate of the location
+     * @return - the agent on the board.
+     */
     public Agent getAgent(int x, int y){
         return worldState.get(locate(x,y));
     }
-	public int getDimension()
+
+    /**
+     * Returns the dimension of the board
+     * @return - the dimension of the board
+     */
+    public int getDimension()
 	{
 		return dimension;
 	}
@@ -109,16 +187,15 @@ public class World {
      * @param return - an array containing the corresponding x and the y
      * coordinates to hash map id.
      */
-        private int[] locate(int id) {
+          private int[] locate(int id) {
             int x = id / this.dimension;
             int y = id % this.dimension;
             return new int[] {x, y};
         }
-        /*
-         * 
-         * 
-         * 
-        */
+
+    /**
+     * Simulates the death in the world.
+     */
     public void Death(){
         Agent a;
         for(Integer i:worldState.keySet()){
@@ -129,6 +206,13 @@ public class World {
             }
         }
     }
+
+
+    /**
+     * Creates and returns a random agent
+     * @param numberOfEthnicities - the number of ethnicities
+     * @return -  the agent itself
+     */
     public Agent makeRandomAgent(int numberOfEthnicities){
         Random r=new Random();
         int col=r.nextInt(numberOfEthnicities);
@@ -180,8 +264,10 @@ public class World {
 		}
     	
     }
-        
-    //print world
+
+    /**
+     * Displays the current world state.
+     */
     public void printWorld()
     {
     	 for(int i =0;i<dimension;i++)
@@ -200,10 +286,27 @@ public class World {
          	System.out.println();
          }
     }
+
+    /**
+     * Checks if there is an agent on the location
+     * @param x -  the x coordinate of the location
+     * @param y - the y coordinate of location
+     * @return - returns true if there is an agent on the location
+     */
     public boolean isAgentInPosition(int x, int y)
     {
-    	return(worldState.get(locate(x,y))==null?false:true);
+
+        return(worldState.get(locate(x,y))==null?false:true);
     }
+
+
+    /**
+     * Returns the list of neighbours of an agent
+     * @param i - the x coordiante of the agent location
+     * @param j - the y coordinate of the agent location
+     * @param radius - the neighbourhood radius
+     * @return - a list of neighbours of the agent
+     */
     public List<Agent> findNeighbours(int i, int j, int radius){
         int k=locate(i,j);
         System.out.println("point:"+i+","+j);
@@ -236,6 +339,14 @@ public class World {
         return neighbors;
 
     }
+
+    /**
+     * Returns the list of spaces in the neighbourhood of an agent
+     * @param i - the x coordiante of the agent location
+     * @param j - the y coordinate of the agent location
+     * @param radius - the neighbourhood radius
+     * @return - a list of neighbourhood spaces of the agent
+     */
     public List<int[]> findNeighboringSpaces(int i, int j, int radius){
         int k=locate(i,j);
         List<int[]> neighborhood = new ArrayList<int[]>();
@@ -255,6 +366,12 @@ public class World {
 
     }
 
+
+    /**
+     * Selects a random neighbour from the list of neighbours
+     * @param neighbours - the list of neighbours
+     * @return - the selected neighbour
+     */
     public int selectNeighbour(int[] neighbours){
         Random r=new Random();
         for(int i: neighbours){
@@ -264,6 +381,10 @@ public class World {
         }
         return -1;
     }
+
+    /**
+     * Updates the agent classifications.
+     */
     public void count(){
         CCcount=0;
         CDcount=0;

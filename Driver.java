@@ -1,15 +1,20 @@
 package SWEN90004;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
-import java.io.IOException;
 
 public class Driver {
 	private World Map;
 	public int noOfEthnicities;
 	private double initialPtr;
 	private int immigrantsPerDay;
+
+
+	/**
+	 * Default constructor of the world
+	 */
 	public Driver()
 	{
 		System.out.println("Initializing Driver");
@@ -18,8 +23,10 @@ public class Driver {
 		immigrantsPerDay = 4;
 		Map  = new World();
 	}
-	
-	//Immigration Phase
+
+	/**
+	 * Simulates the immigration phase
+	 */
 	public void Immigration()
 	{
 		System.out.println("Immigration Phase.");
@@ -44,7 +51,11 @@ public class Driver {
         	System.out.println("OutOfTheWorldException. Terminating Program.");
         }
 	}
-	
+
+
+	/**
+	 * Simulates the interaction phase
+	 */
 	public void Interaction()
 	{
 		System.out.println("Interaction Phase");
@@ -57,6 +68,11 @@ public class Driver {
 		}
 	}
 
+	/**
+	 * Makes two agents interact with each other.
+	 * @param a - the first agent
+	 * @param b - the second agent
+	 */
 	public void Interact(Agent a, Agent b)
 	{
 		if(a.getColor()==b.getColor()&&a.isCoopSame())
@@ -69,6 +85,10 @@ public class Driver {
 		}
 	}
 
+
+	/**
+	 * Simulates the reproduction phase of the board
+	 */
 	public void Reproduction()
 	{
 		System.out.println("Reproduction Phase");
@@ -99,6 +119,10 @@ public class Driver {
 
 	}
 
+
+	/**
+	 * Simulates the death phase of the world
+	 */
 	public void Death()
 	{
 		System.out.println("Death Phase");
@@ -118,14 +142,29 @@ public class Driver {
 			}
 		}
 	}
+
+	/**
+	 * Displays the count of agents in the world.
+	 */
     public void PrintCount(){
     	System.out.println("\t\t\t\tCC:"+Agent.CCcount+";CD:"+Agent.CDcount+
     			"DC:"+Agent.DCcount+";DD:"+Agent.DDcount);
     }
-    public int[] export(){
-        return new int[]{Agent.CCcount,Agent.CDcount,Agent.DCcount,Agent.DDcount};
-}
-    //Exports the current number of agents per category
+
+	/**
+	 * Exports the current number of agents per category
+	 * @return
+	 */
+	public int[] export(){
+
+		return new int[]{Agent.CCcount,Agent.CDcount,Agent.DCcount,Agent.DDcount};
+	}
+
+
+	/**
+	 *
+	 * @return
+	 */
     public String Status(){
         int[] result=export();
         String s="";
@@ -140,6 +179,12 @@ public class Driver {
         }
         return s;
     }
+
+
+	/**
+	 * Drives the world for a number of ticks
+	 * @param ticks - the number of ticks
+	 */
 	public void drive(int ticks){
 		try{
         FileWriter f=new FileWriter("ethno.csv");
