@@ -28,7 +28,7 @@ public class World {
         dimension =5;
 		int Dimension;
 		try {
-			Scanner sc = new Scanner(new File("C:\\Users\\abhimanyu\\workspace\\sillinesssake\\src\\sillinesssake\\WorldMap.txt"));
+			Scanner sc = new Scanner(new File("/SWEN90004/WorldMap.txt"));
 			Dimension = Integer.parseInt(sc.nextLine());
 			System.out.println("Dimension:"+Dimension);
 			Map = new Cell[Dimension][Dimension];
