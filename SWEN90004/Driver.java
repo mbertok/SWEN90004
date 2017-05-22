@@ -11,16 +11,15 @@ public class Driver {
 	private double initialPtr;
 	private int immigrantsPerDay;
 
-
 	/**
 	 * Default constructor of the world
 	 */
 	public Driver()
 	{
 		System.out.println("Initializing Driver");
-		noOfEthnicities = 4;
-		initialPtr = 0.12;
-		immigrantsPerDay = 4;
+		noOfEthnicities = Params.NO_OF_ETHNICITIES;
+		initialPtr = Params.INITIAL_PTR;
+		immigrantsPerDay = Params.IMMIGRANTS_PER_DAY;
 		Map  = new World();
 	}
 
@@ -29,7 +28,7 @@ public class Driver {
 	 */
 	public void Immigration()
 	{
-		System.out.println("Immigration Phase.");
+//		System.out.println("Immigration Phase.");
 	    Random r=new Random();
         List<int[]> coord = Map.getSpaces();
         int[] key;
@@ -58,7 +57,7 @@ public class Driver {
 	 */
 	public void Interaction()
 	{
-		System.out.println("Interaction Phase");
+//		System.out.println("Interaction Phase");
 		for(int[] i : Map.getAgents())
 		{
 			for(Agent neighbor : Map.findNeighbours(i[0], i[1],1))
@@ -91,7 +90,7 @@ public class Driver {
 	 */
 	public void Reproduction()
 	{
-		System.out.println("Reproduction Phase");
+//		System.out.println("Reproduction Phase");
 		try {
 			//Get list of agents
 			List<int[]> coord = Map.getAgents();
@@ -106,10 +105,11 @@ public class Driver {
                     if(neighboringSpaces.size()>0){
                         int[] point = neighboringSpaces.get(r.nextInt(neighboringSpaces.size()));
                         Map.addAgent(a.reproduce(Map.getMutationRate(), initialPtr, 0, noOfEthnicities), point[0], point[1]);
+                       
                     }
 				}
 				//Initialize ptr
-				a.setPtr(initialPtr);
+//				a.setPtr(initialPtr);
 			}
 		}
 		catch(OutOfTheWorldException e)
@@ -125,7 +125,7 @@ public class Driver {
 	 */
 	public void Death()
 	{
-		System.out.println("Death Phase");
+//		System.out.println("Death Phase");
 		Random r = new Random();
 		for(int[] i : Map.getAgents())
 		{
@@ -133,7 +133,7 @@ public class Driver {
 			{
 				try{
 				Map.removeAgent(i[0], i[1]);
-                    System.out.println("MIA");
+//                    System.out.println("MIA");
                 }
 				catch (OutOfTheWorldException e)
 				{
@@ -147,8 +147,8 @@ public class Driver {
 	 * Displays the count of agents in the world.
 	 */
     public void PrintCount(){
-    	System.out.println("\t\t\t\tCC:"+Agent.CCcount+";CD:"+Agent.CDcount+
-    			"DC:"+Agent.DCcount+";DD:"+Agent.DDcount);
+    	System.out.println("\t\t\t\tCC:"+Map.getCCcount()+";CD:"+Map.getCDcount()+
+    			"DC:"+Map.getDCcount()+";DD:"+Map.getDDcount());
     }
 
 	/**
@@ -157,9 +157,8 @@ public class Driver {
 	 */
 	public int[] export(){
 
-		return new int[]{Agent.CCcount,Agent.CDcount,Agent.DCcount,Agent.DDcount};
+		return new int[]{Map.getCCcount(),Map.getCDcount(),Map.getDCcount(),Map.getDDcount()};
 	}
-
 
 	/**
 	 *

@@ -4,10 +4,6 @@ import java.util.Random;
 public class Agent {
     public int color;
     public double ptr;
-    public static int CCcount =0;
-    public static int CDcount =0;
-    public static int DCcount =0;
-    public static int DDcount =0;
     private boolean coop_same;
     private boolean coop_diff;
 
@@ -19,27 +15,12 @@ public class Agent {
      * @param diff - whether the agent cooperates with different colors
      */
     Agent(int col,double potential,boolean same,boolean diff){
-        System.out.println("\t\t\t\tMaking Agent");
-    	this.color=col;
+//        System.out.println("\t\t\t\tMaking Agent");
+    		this.color=col;
         this.ptr=potential;
         this.coop_same=same;
         this.coop_diff=diff;
-        if(coop_same)
-        {
-        	if(coop_diff)
-        		CCcount+=1;
-        	else
-        		CDcount+=1;
-        }
-        else
-        {
-        	if(coop_diff)
-        		DCcount+=1;
-        	else
-        		DDcount+=1;
-        }
     }
-
 
     /**
      * Returns isCoopSame value
@@ -186,29 +167,6 @@ public class Agent {
     public boolean die(double death_rate){
         return  check(death_rate);
     }
-
-
-    /**
-     * Kills an agent
-     */
-    public  void kill(){
-        if(this.coop_same)
-        {
-            if(this.coop_diff)
-                CCcount-=1;
-            else
-                CDcount-=1;
-        }
-        else
-        {
-            if(this.coop_diff)
-                DCcount-=1;
-            else
-                DDcount-=1;
-        }
-    }
-
-
 
     /**
      * Simulates the reproduction of an agent

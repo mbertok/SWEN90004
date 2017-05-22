@@ -31,18 +31,23 @@ public class World {
      */
     public World()
 	{
-		System.out.println("Creating World.");
-		mutationRate = 0.005;
-		deathRate = 0.10;
-		costOfGiving = 0.01;
-		gainOfReceiving = 0.03;
-		immigrantChanceToCooperateWithSameColor =0.50;
-        dimension =5;
+        this.CCcount =0;
+        this.CDcount =0;
+        this.DCcount =0;
+        this.DDcount =0;
+		System.out.println("Creating a World of "+Params.DIMENSION+"x"+Params.DIMENSION+" size.");
+		mutationRate = Params.MUTATION_RATE;
+		deathRate = Params.DEATH_RATE;
+		costOfGiving = Params.COST_OF_GIVING;
+		gainOfReceiving = Params.GAIN_OF_RECEIVING;
+		immigrantChanceToCooperateWithSameColor = Params.IMMIGRANT_CHANCE_TO_COOP_WITH_SAME;
+		immigrantChanceToCooperateWithDifferentColor = Params.IMMIGRANT_CHANCE_TO_COOP_WITH_DIFFERENT; 
+		dimension = Params.DIMENSION;
         for(int i =0;i<dimension;i++)
         {
         	for(int j=0;j<dimension;j++)
         	{
-        		allSpaces.put(i+j, ' ');
+        		allSpaces.put(locate(i,j), ' ');
         	}
         }
 	}
@@ -234,15 +239,23 @@ public class World {
      */
     public void addAgent(Agent agent, int x, int y) throws OutOfTheWorldException
     {
-		if(x<dimension&&y<dimension)
+		if(allSpaces.containsKey(locate(x,y)))
 		{
     		worldState.put(locate(x,y), agent);
-        	allSpaces.remove(locate(x,y));
+    		allSpaces.remove(locate(x,y));
+    		if(agent.isAlturist()){
+                CCcount++;
+            }
+            else if (agent.isEgoist()){
+                DDcount++;
+            }
+            else if(agent.isCosmopolitan()){
+                DCcount++;
+            }
+            else if(agent.isEthnocentric()){
+                CDcount++;
+            }
 		}
-		else
-		{
-			throw new OutOfTheWorldException("Coordinate greater than dimension");
-		}	
     }
     
     /*
@@ -252,15 +265,24 @@ public class World {
      */
     public void removeAgent(int x, int y) throws OutOfTheWorldException
     {
-    	if(x<dimension&&y<dimension)
+    	if(worldState.containsKey(locate(x,y)))
 		{
-	    	worldState.get(locate(x,y)).kill();
-            worldState.remove(locate(x,y));
+	    	Agent agent = worldState.get(locate(x,y));
+	    	worldState.remove(locate(x,y));
 	    	allSpaces.put(locate(x,y),' ');
-		}
-    	else
-		{
-			throw new OutOfTheWorldException("Coordinate greater than dimension");
+    		if(agent.isAlturist()){
+                CCcount--;
+            }
+            else if (agent.isEgoist()){
+                DDcount--;
+            }
+            else if(agent.isCosmopolitan()){
+                DCcount--;
+            }
+            else if(agent.isEthnocentric()){
+                CDcount--;
+            }
+    		
 		}
     	
     }
@@ -276,11 +298,11 @@ public class World {
          	{
          		if(worldState.containsKey(i+j))
          		{
-         			System.out.print(worldState.get(i+j));
+         			System.out.print(worldState.get(locate(i,j)));
          		}
          		else
          		{
-         			System.out.println(allSpaces.get(i+j));
+         			System.out.println(allSpaces.get(locate(i,j)));
          		}
          	}
          	System.out.println();
@@ -309,7 +331,6 @@ public class World {
      */
     public List<Agent> findNeighbours(int i, int j, int radius){
         int k=locate(i,j);
-        System.out.println("point:"+i+","+j);
         List<int[]> neighborhood = new ArrayList<int[]>();
         List<Agent> neighbors=new ArrayList<Agent>();
         for(int x=i-radius;x<dimension&&x<=i+radius;x++)	//add all points in the 
@@ -324,6 +345,7 @@ public class World {
         			if(x>=0&&x<dimension&&y>=0&&y<dimension)
         			{
 	        			neighborhood.add(new int[]{x,y});
+	        			//System.out.println("Neighbour Added:\t "+"X:"+x+"\tY:"+y);
         			}
         		}
         	}
@@ -348,20 +370,34 @@ public class World {
      * @return - a list of neighbourhood spaces of the agent
      */
     public List<int[]> findNeighboringSpaces(int i, int j, int radius){
-        int k=locate(i,j);
+    	int k=locate(i,j);
         List<int[]> neighborhood = new ArrayList<int[]>();
-        List<Agent> neighboringSpaces;
-        for(int x=i-radius;x<=i+radius;x++)	//add all points without agent in the 
-        {													//Von Neumann neighborhood. 	
+        List<Agent> neighbors=new ArrayList<Agent>();
+        for(int x=i-radius;x<dimension&&x<=i+radius;x++)	//add all points in the 
+        {
+        
+        	//Von Neumann neighborhood. 	
         	for(int y=j-radius;y<=j+radius;y++)
         	{
+        		
         		if(Math.abs(x-i)+Math.abs(y-j)<=radius)
         		{
-        			if(!isAgentInPosition(x, y))
-        			neighborhood.add(new int[]{x,y});
+        			if(x>=0&&x<dimension&&y>=0&&y<dimension)
+        			{
+	        			neighborhood.add(new int[]{x,y});
+	        			//System.out.println("Neighbour Added:\t "+"X:"+x+"\tY:"+y);
+        			}
         		}
         	}
         }
+        neighborhood.remove(new int[]{i,j});	   
+    		for(int[]point: neighborhood)
+    		{
+    			int x=point[0];
+    			int y=point[1];
+    			if(isAgentInPosition(x, y))
+    			neighborhood.remove(new int[]{x,y});
+       	}
         return neighborhood;
 
     }
@@ -408,6 +444,34 @@ public class World {
 
         }
     }
+
+	/**
+	 * @return the cCcount
+	 */
+	public int getCCcount() {
+		return CCcount;
+	}
+
+	/**
+	 * @return the cDcount
+	 */
+	public int getCDcount() {
+		return CDcount;
+	}
+
+	/**
+	 * @return the dCcount
+	 */
+	public int getDCcount() {
+		return DCcount;
+	}
+
+	/**
+	 * @return the dDcount
+	 */
+	public int getDDcount() {
+		return DDcount;
+	}
 
 
 
