@@ -1,4 +1,3 @@
-package SWEN90004;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -184,9 +183,9 @@ public class Driver {
 	 * Drives the world for a number of ticks
 	 * @param ticks - the number of ticks
 	 */
-	public void drive(int ticks){
+	public void drive(int ticks, int name, String dir){
 		try{
-        FileWriter f=new FileWriter("ethno.csv");
+        FileWriter f=new FileWriter(dir+"/"+name+".csv");
         f.write("Tick,CC,CD,DC,DD \n");
 		for(int i=1;i<=ticks;i++)
 		{
