@@ -1,10 +1,11 @@
-package SWEN90004;
 
 public class Simulator {
 
 	public static void main(String[] args) {
-		Driver driver=new Driver();
-		driver.drive(Params.NUMBER_OF_TICKS);
+		for(int i=1;i<=50;i++){
+			Driver driver = new Driver();
+			driver.drive(Params.NUMBER_OF_TICKS, i, "Newdata");
+		}
 	}
 
 }
