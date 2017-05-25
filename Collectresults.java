@@ -25,7 +25,6 @@ public class Collectresults {
         double[] DC=new double [500];
         double[] DD=new double [500];
         String[] r=new String[5];
-        int cc,cd,dc,dd=0;
         for(int i=1;i<=counter;i++){
             first=true;
             String sCurrentLine;
@@ -48,17 +47,23 @@ public class Collectresults {
             br.close();
 
         }
-        for(int j=0;j<counter;j++){
-            System.out.println(CC[j]);
-            CC[j]=CC[j]/counter;
-            CD[j]=CD[j]/counter;
-            DC[j]=DC[j]/counter;
-            DD[j]=DD[j]/counter;
+        for(int j=0;j<ticks;j++){
+            System.out.println(CC[j]/counter);
+            double temp=CC[j]/counter;
+            CC[j]=temp;
+            temp=CD[j]/counter;
+            CD[j]=temp;
+            temp=DC[j]/counter;
+            DC[j]=temp;
+            temp=DD[j]/counter;
+            DD[j]=temp;
         }
         System.out.println(CC[0]);
         FileWriter f=new FileWriter("av-r-"+dir+".csv");
         f.write("Tick,Number,Type\n");
         for(int k=1;k<=ticks;k++){
+            if(k==ticks)
+                System.out.println("Last:"+CC[k-1]);
             f.write(k+","+CC[k-1]+",CC \n");
             f.write(k+","+CD[k-1]+",CD \n");
             f.write(k+","+DC[k-1]+",DC \n");
