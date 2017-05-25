@@ -2,23 +2,13 @@
  * Created by marci on 17/05/2017.
  */
 import java.io.*;
-import java.util.*;
 
-public class Collectresults {
+public class Collectresults_Ext {
     public static void main(String[] args) throws FileNotFoundException, IOException{
-        Scanner s=new Scanner(System.in);
-        int ticks=s.nextInt();
-        int count=s.nextInt();
-        for (String i: args){
-            calculate(i,count,ticks);
-        }
-
-
-    }
-    public static void calculate(String dir,int counter,int ticks) throws IOException{
         BufferedReader br = null;
         boolean first=true;
         FileReader fr = null;
+        int counter=2;
         String[] results=new String[50];
         double[] CC=new double [500];
         double[] CD=new double [500];
@@ -30,7 +20,7 @@ public class Collectresults {
             first=true;
             String sCurrentLine;
 
-            br = new BufferedReader(new FileReader(dir+"/"+i+".csv"));
+            br = new BufferedReader(new FileReader("Ext/"+i+".csv"));
 
             while ((sCurrentLine = br.readLine()) != null) {
                 if(!first) {
@@ -48,7 +38,7 @@ public class Collectresults {
             br.close();
 
         }
-        for(int j=0;j<counter;j++){
+        for(int j=0;j<500;j++){
             System.out.println(CC[j]);
             CC[j]=CC[j]/counter;
             CD[j]=CD[j]/counter;
@@ -56,9 +46,9 @@ public class Collectresults {
             DD[j]=DD[j]/counter;
         }
         System.out.println(CC[0]);
-        FileWriter f=new FileWriter("av-r-"+dir+".csv");
+        FileWriter f=new FileWriter("Ext/av-r.csv");
         f.write("Tick,Number,Type\n");
-        for(int k=1;k<=ticks;k++){
+        for(int k=1;k<=500;k++){
             f.write(k+","+CC[k-1]+",CC \n");
             f.write(k+","+CD[k-1]+",CD \n");
             f.write(k+","+DC[k-1]+",DC \n");
@@ -66,5 +56,7 @@ public class Collectresults {
             //f.write(k+","+CC[k-1]+","+CD[k-1]+","+DC[k-1]+","+DD[k-1]+"\n");
         }
         f.close();
+
+
     }
 }

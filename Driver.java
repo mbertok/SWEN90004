@@ -108,7 +108,7 @@ public class Driver {
                     }
 				}
 				//Initialize ptr
-//				a.setPtr(initialPtr);
+				a.setPtr(initialPtr);
 			}
 		}
 		catch(OutOfTheWorldException e)
