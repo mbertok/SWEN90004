@@ -3,11 +3,15 @@ package Ext;
 import java.util.Random;
 
 public class Agent {
-    public int color;
-    public double ptr;
-    private boolean coop_same;
-    private boolean coop_diff;
-
+	//the color of the Agent
+	public int color;
+	//the potential to reproduce
+	public double ptr;
+	//whether the agent cooperates with same color
+	private boolean coop_same;
+	//whether the agent cooperates with different color
+	private boolean coop_diff;
+	
     /**
      * Default constructor
      * @param col - the color of the agent
@@ -55,14 +59,23 @@ public class Agent {
     }
 
 
-
-    public void give(double amount, Agent a){
+    /**
+     * The agent gives from it's ptr to another agent
+     * @param amount - the amount to give
+     * @param a - the agent to give the amount to
+     */
+    public void give(double amount,Agent a){
         //this.ptr=-amount;
         a.setPtr(a.getPtr()+amount);
     }
-
-
-    public void take(double amount, Agent a){
+    
+    
+    /**
+     * The agent takes from an agent's ptr
+     * @param amount - the amount to take
+     * @param a - the agent to take from
+     */
+    public void take(double amount,Agent a){
         //this.ptr=+amount;
         this.setPtr(a.getPtr()-amount);
     }

@@ -6,9 +6,16 @@ import java.util.List;
 import java.util.Random;
 
 public class Driver {
+	// The world object
 	private World Map;
+	
+	//The number of Ethnicities in the world
 	public int noOfEthnicities;
+	
+	//The initial potential to reproduce of an agent
 	private double initialPtr;
+	
+	//The number of immigrants allowed per day in the world
 	private int immigrantsPerDay;
 
 	/**
@@ -25,6 +32,7 @@ public class Driver {
 
 	/**
 	 * Simulates the immigration phase
+	 * Adds the immigrants in the map if there are spaces
 	 */
 	public void Immigration()
 	{
