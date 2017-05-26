@@ -84,7 +84,6 @@ public class Driver {
 		}
 	}
 
-
 	/**
 	 * Simulates the reproduction phase of the board
 	 */
@@ -98,9 +97,9 @@ public class Driver {
 			Random r = new Random();
 			for (int[] i : coord) {
 				a = Map.getAgent(i[0], i[1]);
-                System.out.println(i[0]+i[1]+" Agent ptr before"+a.getPtr());
+//                System.out.println(i[0]+i[1]+" Agent ptr before"+a.getPtr());
                 a.setPtr(a.getPtr()+Map.getptrfrommap(i[0],i[1]));
-                System.out.println(i[0]+i[1]+" Agent ptr after"+a.getPtr());
+//                System.out.println("["+i[0]+"]["+i[1]+"] Agent ptr after"+a.getPtr());
                 //check if ready to reproduce
                 if (a.check(a.getPtr())) {
 					//selecting cell to put reproduce in

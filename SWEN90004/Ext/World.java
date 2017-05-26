@@ -97,11 +97,13 @@ public class World {
     	}
     	else
     	{
+    		Map = new double[dimension][dimension];
     		for(int i=0;i<dimension;i++)
     		{
     			for(int j=0;j<dimension;j++)
     			{
-    				Map[i][j]=Params.DEFAULT_WORLD_PTR;
+    				Map[i][j] = Params.DEFAULT_WORLD_PTR;
+    				//System.out.println(Map[i][j]);
     			}
     		}
     	}
