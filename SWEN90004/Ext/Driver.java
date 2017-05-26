@@ -182,7 +182,9 @@ public class Driver {
 	 */
 	public void drive(int ticks, int name, String dir) {
 		try {
-			FileWriter f = new FileWriter(dir + "/" + name + ".csv");
+			String fname = "SWEN90004/"+dir + "/" + name + ".csv";
+			System.out.println(fname);
+			FileWriter f = new FileWriter(fname);
 			f.write("Tick,CC,CD,DC,DD \n");
 			for (int i = 1; i <= ticks; i++) {
 				System.out.println("Tick:" + i);
@@ -193,11 +195,10 @@ public class Driver {
 				PrintCount();
 				f.write("" + i + ",");
 				f.write(Status());
-				Map.print_ptr();
 			}
 			f.close();
 		} catch (IOException e) {
-			System.out.println("IOException caught. terminating program");
+			System.out.println(e.getMessage());
 		}
 	}
 }

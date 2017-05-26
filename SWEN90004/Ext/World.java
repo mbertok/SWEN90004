@@ -73,9 +73,11 @@ public class World {
 		immigrantChanceToCooperateWithDifferentColor = Params.IMMIGRANT_CHANCE_TO_COOP_WITH_DIFFERENT;
 		dimension = Params.DIMENSION;
 		if (Params.PTR_MAP.equals("")) {
+			Map = new double[dimension][dimension];
 			for (int i = 0; i < dimension; i++) {
 				for (int j = 0; j < dimension; j++) {
 					allSpaces.put(locate(i, j), ' ');
+					Map[i][j]=Params.DEFAULT_WORLD_PTR;
 				}
 			}
 		} else {
