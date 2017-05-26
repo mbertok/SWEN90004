@@ -45,4 +45,7 @@ public class Params {
 	
 	//The number of times we want to run the simulation
 	public final static double SIMULATION_NO_OF_RUNS = 10;
+	
+	//The folder to dump the results as csv files
+	public final static String DATA_DUMP_FOLDER = "Ext_test";
 }
