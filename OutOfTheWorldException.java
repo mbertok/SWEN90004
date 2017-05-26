@@ -1,4 +1,3 @@
-package Ext;
 
 public class OutOfTheWorldException extends Exception {
 	public OutOfTheWorldException(String message) {

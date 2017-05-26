@@ -1,4 +1,3 @@
-package Ext;
 
 public class Params {
 	// The dimension of the world

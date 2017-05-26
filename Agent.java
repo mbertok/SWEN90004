@@ -1,4 +1,3 @@
-package Ext;
 
 import java.util.Random;
 

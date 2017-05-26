@@ -1,4 +1,3 @@
-package Ext;
 
 public class Simulator {
 

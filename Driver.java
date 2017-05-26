@@ -1,4 +1,3 @@
-package Ext;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -182,7 +181,7 @@ public class Driver {
 	 */
 	public void drive(int ticks, int name, String dir) {
 		try {
-			String fname = "SWEN90004/"+dir + "/" + name + ".csv";
+			String fname = dir + "/" + name + ".csv";
 			System.out.println(fname);
 			FileWriter f = new FileWriter(fname);
 			f.write("Tick,CC,CD,DC,DD \n");
