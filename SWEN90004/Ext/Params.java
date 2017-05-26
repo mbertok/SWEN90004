@@ -42,4 +42,7 @@ public class Params {
 
 	// The default potential to reproduce for the world
 	public final static double DEFAULT_WORLD_PTR = 0.0;
+	
+	//The number of times we want to run the simulation
+	public final static double SIMULATION_NO_OF_RUNS = 10;
 }
