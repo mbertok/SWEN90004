@@ -53,13 +53,16 @@ public class World {
 		immigrantChanceToCooperateWithSameColor = Params.IMMIGRANT_CHANCE_TO_COOP_WITH_SAME;
 		immigrantChanceToCooperateWithDifferentColor = Params.IMMIGRANT_CHANCE_TO_COOP_WITH_DIFFERENT; 
 		dimension = Params.DIMENSION;
-        for(int i =0;i<dimension;i++)
-        {
-        	for(int j=0;j<dimension;j++)
-        	{
-        		allSpaces.put(locate(i,j), ' ');
-        	}
-        }
+		if(Params.PTR_MAP.equals(""))
+		{
+	        for(int i =0;i<dimension;i++)
+	        {
+	        	for(int j=0;j<dimension;j++)
+	        	{
+	        		allSpaces.put(locate(i,j), ' ');
+	        	}
+	        }
+	    }
         try{
         	setPtrmap(Params.PTR_MAP);
         }
@@ -81,7 +84,7 @@ public class World {
 					 for(String s: sc.nextLine().split("\t"))
 			          {
 						 double temp =  Double.parseDouble(s);
-						 System.out.println(temp);
+//						 System.out.println(temp);
 						 Map[i][j]=temp;
 						 j++;
 			          }
@@ -361,7 +364,7 @@ public class World {
          		}
          		else
          		{
-         			System.out.println(allSpaces.get(locate(i,j)));
+         			System.out.println(Map[i][j]);
          		}
          	}
          	System.out.println();

@@ -13,6 +13,6 @@ public class Params {
 	public final static double INITIAL_PTR=0.12;
 	public final static int IMMIGRANTS_PER_DAY=1;
 	public final static int NUMBER_OF_TICKS = 500;
-    public final static String PTR_MAP = "WorldMap.txt";
+    public final static String PTR_MAP = "";
     public final static double DEFAULT_WORLD_PTR = 0.0;
 }
